@@ -1,0 +1,10 @@
+Books/
+# Don't ignore pdf and folder
+Practice/*
+!Practice/*.pdf
+!Practice/**
+
+# Don't ignore the .c file
+Practice/**/*
+!Practice/**/*.c
+!Practice/**/*.h
