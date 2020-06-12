@@ -1,0 +1,55 @@
+[p GLOBOPT AUTOSTATIC IEEE_FLT IEEE_DBL LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F8722 ]
+[d frameptr 4065 ]
+"4 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\fleq.c
+[v ___fleq __fleq `(b  1 e 0 0 ]
+"62 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\float.c
+[v ___ftpack __ftpack `(f  1 e 4 0 ]
+"86 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 4 0 ]
+"54 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 4 0 ]
+"62 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 4 0 ]
+"19 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 4 0 ]
+"10 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 4 0 ]
+"11 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+"8 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+"15 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 D:\Setup\Microchip\xc8\v2.05\pic\sources\c99\common\Umul64.c
+[v ___omul __omul `(uo  1 e 8 0 ]
+"19 E:\Study\Class\19.20 - S1\MicroController\Practice\project_3.X\Tn06.c
+[v _init init `(v  1 e 1 0 ]
+"27
+[v _main main `(v  1 e 1 0 ]
+"10174 D:\Setup\Microchip\xc8\v2.05\pic\include\pic18f8722.h
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @4033 ]
+"13 E:\Study\Class\19.20 - S1\MicroController\Practice\project_3.X\Tn06.c
+[v _keyout keyout `VEuc  1 e 1 @3978 ]
+"14
+[v _keyin keyin `VEuc  1 e 1 @3969 ]
+"15
+[v _key_io key_io `VEuc  1 e 1 @3987 ]
+"16
+[v _led led `VEuc  1 e 1 @3980 ]
+"17
+[v _led_io led_io `VEuc  1 e 1 @3989 ]
+"27
+[v _main main `(v  1 e 1 0 ]
+{
+"32
+} 0
+"19
+[v _init init `(v  1 e 1 0 ]
+{
+"25
+} 0

@@ -1,0 +1,1092 @@
+
+
+Microchip MPLAB XC8 Assembler V2.05 build -831301201 
+                                                                                               Tue Oct 29 14:37:34 2019
+
+Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1 
+     1                           	processor	18F8722
+     2                           	fnconf	rparam,??,?,0
+     3                           	opt	pw 120
+     4                           	opt	flic
+     5                           	psect	smallconst,global,reloc=2,class=SMALLCONST,delta=1,noexec
+     6                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     7                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1,noexec
+     8                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,noexec
+     9                           	psect	text0,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    13                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    14                           	psect	intcodelo,global,reloc=2,class=CODE,delta=1
+    15                           	psect	text6,global,reloc=2,class=CODE,delta=1
+    16                           	psect	text7,global,reloc=2,class=CODE,delta=1
+    17                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    18                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    19                           	psect	temp,global,ovrld,common,class=COMRAM,space=1,delta=1
+    20  0000                     
+    21                           ; Version 2.05
+    22                           ; Generated 20/12/2018 GMT
+    23                           ; 
+    24                           ; Copyright © 2018, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    25                           ; All rights reserved.
+    26                           ; 
+    27                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    28                           ; 
+    29                           ; Redistribution and use in source and binary forms, with or without modification, are
+    30                           ; permitted provided that the following conditions are met:
+    31                           ; 
+    32                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    33                           ;        conditions and the following disclaimer.
+    34                           ; 
+    35                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    36                           ;        of conditions and the following disclaimer in the documentation and/or other
+    37                           ;        materials provided with the distribution.
+    38                           ; 
+    39                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    40                           ;        software without specific prior written permission.
+    41                           ; 
+    42                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    43                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    44                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    45                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    46                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    47                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    48                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    49                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    50                           ; 
+    51                           ; 
+    52                           ; Code-generator required, PIC18F8722 Definitions
+    53                           ; 
+    54                           ; SFR Addresses
+    55  0000                     
+    56                           	psect	smallconst
+    57  001000                     __psmallconst:
+    58                           	opt callstack 0
+    59  001000  00                 	db	0
+    60  001001                     _maurom:
+    61                           	opt callstack 0
+    62  001001  80                 	db	128
+    63  001002  40                 	db	64
+    64  001003  3C                 	db	60
+    65  001004  24                 	db	36
+    66  001005  24                 	db	36
+    67  001006  3C                 	db	60
+    68  001007  02                 	db	2
+    69  001008  01                 	db	1
+    70  001009  01                 	db	1
+    71  00100A  02                 	db	2
+    72  00100B  3C                 	db	60
+    73  00100C  24                 	db	36
+    74  00100D  24                 	db	36
+    75  00100E  3C                 	db	60
+    76  00100F  40                 	db	64
+    77  001010  80                 	db	128
+    78  001011                     __end_of_maurom:
+    79                           	opt callstack 0
+    80  0000                     _TMR0	set	4054
+    81  0000                     _T0CON	set	4053
+    82  0000                     _INTCONbits	set	4082
+    83  0000                     _INTCON2bits	set	4081
+    84  0000                     _RCONbits	set	4048
+    85  0000                     _TMR0IE	set	32661
+    86  0000                     _TMR0ON	set	32431
+    87  0000                     _TMR0IF	set	32658
+    88                           
+    89                           ; #config settings
+    90  001011  00                 	db	0	; dummy byte at the end
+    91  0000                     
+    92                           	psect	cinit
+    93  0010AE                     __pcinit:
+    94                           	opt callstack 0
+    95  0010AE                     start_initialization:
+    96                           	opt callstack 0
+    97  0010AE                     __initialization:
+    98                           	opt callstack 0
+    99                           
+   100                           ; Clear objects allocated to COMRAM (17 bytes)
+   101  0010AE  EE00  F001         	lfsr	0,__pbssCOMRAM
+   102  0010B2  0E11               	movlw	17
+   103  0010B4                     clear_0:
+   104  0010B4  6AEE               	clrf	postinc0,c
+   105  0010B6  06E8               	decf	wreg,f,c
+   106  0010B8  E1FD               	bnz	clear_0
+   107  0010BA                     end_of_initialization:
+   108                           	opt callstack 0
+   109  0010BA                     __end_of__initialization:
+   110                           	opt callstack 0
+   111  0010BA  901C               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
+   112  0010BC  921C               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+   113  0010BE  0E00               	movlw	low (__Lsmallconst shr (0+16))
+   114  0010C0  6EF8               	movwf	tblptru,c
+   115  0010C2  0E10               	movlw	high __Lsmallconst
+   116  0010C4  6EF7               	movwf	tblptrh,c
+   117  0010C6  0100               	movlb	0
+   118  0010C8  EF80  F008         	goto	_main	;jump to C main() function
+   119                           
+   120                           	psect	bssCOMRAM
+   121  000001                     __pbssCOMRAM:
+   122                           	opt callstack 0
+   123  000001                     _rambuf:
+   124                           	opt callstack 0
+   125  000001                     	ds	16
+   126  000011                     _rowidx:
+   127                           	opt callstack 0
+   128  000011                     	ds	1
+   129                           
+   130                           	psect	cstackCOMRAM
+   131  000012                     __pcstackCOMRAM:
+   132                           	opt callstack 0
+   133  000012                     ??_timer_process:
+   134  000012                     
+   135                           ; 1 bytes @ 0x0
+   136  000012                     	ds	2
+   137  000014                     ??_timer0_isr:
+   138                           
+   139                           ; 1 bytes @ 0x2
+   140  000014                     	ds	5
+   141  000019                     ??_rom2ram:
+   142                           
+   143                           ; 1 bytes @ 0x7
+   144  000019                     	ds	2
+   145  00001B                     rom2ram@i:
+   146                           	opt callstack 0
+   147                           
+   148                           ; 1 bytes @ 0x9
+   149  00001B                     	ds	1
+   150  00001C                     
+   151                           ; 1 bytes @ 0xA
+   152 ;;
+   153 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   154 ;;
+   155 ;; *************** function _main *****************
+   156 ;; Defined at:
+   157 ;;		line 54 in file "Led_Matrix.c"
+   158 ;; Parameters:    Size  Location     Type
+   159 ;;		None
+   160 ;; Auto vars:     Size  Location     Type
+   161 ;;		None
+   162 ;; Return value:  Size  Location     Type
+   163 ;;                  1    wreg      void 
+   164 ;; Registers used:
+   165 ;;		wreg, fsr2l, fsr2h, status,2, status,0, tblptrl, tblptrh, tblptru, cstack
+   166 ;; Tracked objects:
+   167 ;;		On entry : 0/0
+   168 ;;		On exit  : 0/0
+   169 ;;		Unchanged: 0/0
+   170 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   171 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   172 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   173 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   174 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   175 ;;Total ram usage:        0 bytes
+   176 ;; Hardware stack levels required when called:    4
+   177 ;; This function calls:
+   178 ;;		_init
+   179 ;;		_rom2ram
+   180 ;;		_timer0_init
+   181 ;; This function is called by:
+   182 ;;		Startup code after reset
+   183 ;; This function uses a non-reentrant model
+   184 ;;
+   185                           
+   186                           	psect	text0
+   187  001100                     __ptext0:
+   188                           	opt callstack 0
+   189  001100                     _main:
+   190                           	opt callstack 27
+   191                           
+   192                           ;Led_Matrix.c: 56:     init();
+   193                           
+   194                           ;incstack = 0
+   195  001100  EC87  F008         	call	_init	;wreg free
+   196                           
+   197                           ;Led_Matrix.c: 57:     rom2ram();
+   198  001104  EC09  F008         	call	_rom2ram	;wreg free
+   199                           
+   200                           ;Led_Matrix.c: 58:     timer0_init();
+   201  001108  EC66  F008         	call	_timer0_init	;wreg free
+   202  00110C                     l36:
+   203  00110C  D7FF               	goto	l36
+   204  00110E                     __end_of_main:
+   205                           	opt callstack 0
+   206                           
+   207 ;; *************** function _timer0_init *****************
+   208 ;; Defined at:
+   209 ;;		line 5 in file "Timer.c"
+   210 ;; Parameters:    Size  Location     Type
+   211 ;;		None
+   212 ;; Auto vars:     Size  Location     Type
+   213 ;;		None
+   214 ;; Return value:  Size  Location     Type
+   215 ;;                  1    wreg      void 
+   216 ;; Registers used:
+   217 ;;		wreg, status,2, cstack
+   218 ;; Tracked objects:
+   219 ;;		On entry : 0/0
+   220 ;;		On exit  : 0/0
+   221 ;;		Unchanged: 0/0
+   222 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   223 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   224 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   225 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   226 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   227 ;;Total ram usage:        0 bytes
+   228 ;; Hardware stack levels used:    1
+   229 ;; Hardware stack levels required when called:    3
+   230 ;; This function calls:
+   231 ;;		_timer0_reset
+   232 ;; This function is called by:
+   233 ;;		_main
+   234 ;; This function uses a non-reentrant model
+   235 ;;
+   236                           
+   237                           	psect	text1
+   238  0010CC                     __ptext1:
+   239                           	opt callstack 0
+   240  0010CC                     _timer0_init:
+   241                           	opt callstack 27
+   242                           
+   243                           ;Timer.c: 7:     RCONbits.IPEN =1;
+   244                           
+   245                           ;incstack = 0
+   246  0010CC  8ED0               	bsf	4048,7,c	;volatile
+   247                           
+   248                           ;Timer.c: 8:     INTCON2bits.TMR0IP = 0;
+   249  0010CE  94F1               	bcf	4081,2,c	;volatile
+   250                           
+   251                           ;Timer.c: 9:     INTCONbits.TMR0IE = 1;
+   252  0010D0  8AF2               	bsf	4082,5,c	;volatile
+   253                           
+   254                           ;Timer.c: 10:     INTCONbits.GIEH = 1;
+   255  0010D2  8EF2               	bsf	4082,7,c	;volatile
+   256                           
+   257                           ;Timer.c: 11:     INTCONbits.GIEL = 1;
+   258  0010D4  8CF2               	bsf	4082,6,c	;volatile
+   259                           
+   260                           ;Timer.c: 12:     T0CON =0;
+   261  0010D6  0E00               	movlw	0
+   262  0010D8  6ED5               	movwf	4053,c	;volatile
+   263                           
+   264                           ;Timer.c: 13:     timer0_reset();
+   265  0010DA  EC70  F008         	call	_timer0_reset	;wreg free
+   266  0010DE  0012               	return		;funcret
+   267  0010E0                     __end_of_timer0_init:
+   268                           	opt callstack 0
+   269                           
+   270 ;; *************** function _timer0_reset *****************
+   271 ;; Defined at:
+   272 ;;		line 15 in file "Timer.c"
+   273 ;; Parameters:    Size  Location     Type
+   274 ;;		None
+   275 ;; Auto vars:     Size  Location     Type
+   276 ;;		None
+   277 ;; Return value:  Size  Location     Type
+   278 ;;                  1    wreg      void 
+   279 ;; Registers used:
+   280 ;;		wreg, status,2
+   281 ;; Tracked objects:
+   282 ;;		On entry : 0/0
+   283 ;;		On exit  : 0/0
+   284 ;;		Unchanged: 0/0
+   285 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   286 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   287 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   288 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   289 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   290 ;;Total ram usage:        0 bytes
+   291 ;; Hardware stack levels used:    1
+   292 ;; Hardware stack levels required when called:    2
+   293 ;; This function calls:
+   294 ;;		Nothing
+   295 ;; This function is called by:
+   296 ;;		_timer0_init
+   297 ;; This function uses a non-reentrant model
+   298 ;;
+   299                           
+   300                           	psect	text2
+   301  0010E0                     __ptext2:
+   302                           	opt callstack 0
+   303  0010E0                     _timer0_reset:
+   304                           	opt callstack 27
+   305                           
+   306                           ;Timer.c: 17:     TMR0IF = 0;
+   307                           
+   308                           ;incstack = 0
+   309  0010E0  94F2               	bcf	4082,2,c	;volatile
+   310                           
+   311                           ;Timer.c: 18:     TMR0ON = 0;
+   312  0010E2  9ED5               	bcf	4053,7,c	;volatile
+   313                           
+   314                           ;Timer.c: 19:     TMR0 = -1250;
+   315  0010E4  0EFB               	movlw	251
+   316  0010E6  6ED7               	movwf	4055,c	;volatile
+   317  0010E8  0E1E               	movlw	30
+   318  0010EA  6ED6               	movwf	4054,c	;volatile
+   319                           
+   320                           ;Timer.c: 20:     TMR0ON = 1;
+   321  0010EC  8ED5               	bsf	4053,7,c	;volatile
+   322  0010EE  0012               	return		;funcret
+   323  0010F0                     __end_of_timer0_reset:
+   324                           	opt callstack 0
+   325                           
+   326 ;; *************** function _rom2ram *****************
+   327 ;; Defined at:
+   328 ;;		line 35 in file "Led_Matrix.c"
+   329 ;; Parameters:    Size  Location     Type
+   330 ;;		None
+   331 ;; Auto vars:     Size  Location     Type
+   332 ;;  i               1    9[COMRAM] unsigned char 
+   333 ;; Return value:  Size  Location     Type
+   334 ;;                  1    wreg      void 
+   335 ;; Registers used:
+   336 ;;		wreg, fsr2l, fsr2h, status,2, status,0, tblptrl, tblptrh, tblptru
+   337 ;; Tracked objects:
+   338 ;;		On entry : 0/0
+   339 ;;		On exit  : 0/0
+   340 ;;		Unchanged: 0/0
+   341 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   342 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   343 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   344 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   345 ;;      Totals:         3       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   346 ;;Total ram usage:        3 bytes
+   347 ;; Hardware stack levels used:    1
+   348 ;; Hardware stack levels required when called:    2
+   349 ;; This function calls:
+   350 ;;		Nothing
+   351 ;; This function is called by:
+   352 ;;		_main
+   353 ;; This function uses a non-reentrant model
+   354 ;;
+   355                           
+   356                           	psect	text3
+   357  001012                     __ptext3:
+   358                           	opt callstack 0
+   359  001012                     _rom2ram:
+   360                           	opt callstack 28
+   361                           
+   362                           ;Led_Matrix.c: 37:     unsigned char i;;Led_Matrix.c: 38:     for(i=0; i<8; i++)
+   363                           
+   364                           ;incstack = 0
+   365  001012  0E00               	movlw	0
+   366  001014  6E1B               	movwf	rom2ram@i,c
+   367  001016                     l761:
+   368                           
+   369                           ;Led_Matrix.c: 39:     {;Led_Matrix.c: 40:         rambuf[0][i] = maurom[0][i];
+   370  001016  0E01               	movlw	low _maurom
+   371  001018  241B               	addwf	rom2ram@i,w,c
+   372  00101A  6EF6               	movwf	tblptrl,c
+   373  00101C  6AF7               	clrf	tblptrh,c
+   374  00101E  0E10               	movlw	high _maurom
+   375  001020  22F7               	addwfc	tblptrh,f,c
+   376  001022                     	if	0	;There are less than 3 active tblptr bytes
+   377  001022                     	endif
+   378  001022  0E01               	movlw	low _rambuf
+   379  001024  241B               	addwf	rom2ram@i,w,c
+   380  001026  6ED9               	movwf	fsr2l,c
+   381  001028  6ADA               	clrf	fsr2h,c
+   382  00102A  0E00               	movlw	high _rambuf
+   383  00102C  22DA               	addwfc	fsr2h,f,c
+   384  00102E  0008               	tblrd		*
+   385  001030  CFF5 FFDF          	movff	tablat,indf2
+   386                           
+   387                           ;Led_Matrix.c: 41:         rambuf[1][i] = maurom[1][i];
+   388  001034  501B               	movf	rom2ram@i,w,c
+   389  001036  6E19               	movwf	??_rom2ram& (0+255),c
+   390  001038  6A1A               	clrf	(??_rom2ram+1)& (0+255),c
+   391  00103A  0E08               	movlw	8
+   392  00103C  2619               	addwf	??_rom2ram,f,c
+   393  00103E  0E00               	movlw	0
+   394  001040  221A               	addwfc	??_rom2ram+1,f,c
+   395  001042  0E01               	movlw	low _maurom
+   396  001044  2419               	addwf	??_rom2ram,w,c
+   397  001046  6EF6               	movwf	tblptrl,c
+   398  001048  0E10               	movlw	high _maurom
+   399  00104A  201A               	addwfc	??_rom2ram+1,w,c
+   400  00104C  6EF7               	movwf	tblptrh,c
+   401  00104E                     	if	0	;There are less than 3 active tblptr bytes
+   402  00104E                     	endif
+   403  00104E  0E09               	movlw	low (_rambuf+8)
+   404  001050  241B               	addwf	rom2ram@i,w,c
+   405  001052  6ED9               	movwf	fsr2l,c
+   406  001054  6ADA               	clrf	fsr2h,c
+   407  001056  0E00               	movlw	high (_rambuf+8)
+   408  001058  22DA               	addwfc	fsr2h,f,c
+   409  00105A  0008               	tblrd		*
+   410  00105C  CFF5 FFDF          	movff	tablat,indf2
+   411                           
+   412                           ;Led_Matrix.c: 42:     }
+   413  001060  2A1B               	incf	rom2ram@i,f,c
+   414  001062  0E07               	movlw	7
+   415  001064  641B               	cpfsgt	rom2ram@i,c
+   416  001066  D7D7               	goto	l761
+   417  001068  0012               	return	
+   418  00106A                     __end_of_rom2ram:
+   419                           	opt callstack 0
+   420                           
+   421 ;; *************** function _init *****************
+   422 ;; Defined at:
+   423 ;;		line 19 in file "Led_Matrix.c"
+   424 ;; Parameters:    Size  Location     Type
+   425 ;;		None
+   426 ;; Auto vars:     Size  Location     Type
+   427 ;;		None
+   428 ;; Return value:  Size  Location     Type
+   429 ;;                  1    wreg      void 
+   430 ;; Registers used:
+   431 ;;		wreg, status,2
+   432 ;; Tracked objects:
+   433 ;;		On entry : 0/0
+   434 ;;		On exit  : 0/0
+   435 ;;		Unchanged: 0/0
+   436 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   437 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   438 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   439 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   440 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   441 ;;Total ram usage:        0 bytes
+   442 ;; Hardware stack levels used:    1
+   443 ;; Hardware stack levels required when called:    2
+   444 ;; This function calls:
+   445 ;;		Nothing
+   446 ;; This function is called by:
+   447 ;;		_main
+   448 ;; This function uses a non-reentrant model
+   449 ;;
+   450                           
+   451                           	psect	text4
+   452  00110E                     __ptext4:
+   453                           	opt callstack 0
+   454  00110E                     _init:
+   455                           	opt callstack 28
+   456                           
+   457                           ;Led_Matrix.c: 23:     row_io = 0;
+   458                           
+   459                           ;incstack = 0
+   460  00110E  0E00               	movlw	0
+   461  001110  6E93               	movwf	3987,c	;volatile
+   462                           
+   463                           ;Led_Matrix.c: 24:     gcol_io = 0;
+   464  001112  0E00               	movlw	0
+   465  001114  6E94               	movwf	3988,c	;volatile
+   466                           
+   467                           ;Led_Matrix.c: 25:     rcol_io = 0;
+   468  001116  0E00               	movlw	0
+   469  001118  6E95               	movwf	3989,c	;volatile
+   470  00111A  0012               	return		;funcret
+   471  00111C                     __end_of_init:
+   472                           	opt callstack 0
+   473                           
+   474 ;; *************** function _timer0_isr *****************
+   475 ;; Defined at:
+   476 ;;		line 22 in file "Timer.c"
+   477 ;; Parameters:    Size  Location     Type
+   478 ;;		None
+   479 ;; Auto vars:     Size  Location     Type
+   480 ;;		None
+   481 ;; Return value:  Size  Location     Type
+   482 ;;                  1    wreg      void 
+   483 ;; Registers used:
+   484 ;;		wreg, fsr2l, fsr2h, status,2, status,0, cstack
+   485 ;; Tracked objects:
+   486 ;;		On entry : 0/0
+   487 ;;		On exit  : 0/0
+   488 ;;		Unchanged: 0/0
+   489 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   490 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   491 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   492 ;;      Temps:          5       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   493 ;;      Totals:         5       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   494 ;;Total ram usage:        5 bytes
+   495 ;; Hardware stack levels used:    1
+   496 ;; Hardware stack levels required when called:    1
+   497 ;; This function calls:
+   498 ;;		_timer_process
+   499 ;;		i1_timer0_reset
+   500 ;; This function is called by:
+   501 ;;		Interrupt level 1
+   502 ;; This function uses a non-reentrant model
+   503 ;;
+   504                           
+   505                           	psect	intcodelo
+   506  000018                     __pintcodelo:
+   507                           	opt callstack 0
+   508  000018                     _timer0_isr:
+   509                           	opt callstack 27
+   510                           
+   511                           ;incstack = 0
+   512  000018  801C               	bsf	btemp,0,c	;set compiler interrupt flag (level 1)
+   513  00001A  CFD8 F014          	movff	status,??_timer0_isr
+   514  00001E  CFE8 F015          	movff	wreg,??_timer0_isr+1
+   515  000022  CFE0 F016          	movff	bsr,??_timer0_isr+2
+   516  000026  CFD9 F017          	movff	fsr2l,??_timer0_isr+3
+   517  00002A  CFDA F018          	movff	fsr2h,??_timer0_isr+4
+   518                           
+   519                           ;Timer.c: 24:     if(TMR0IE & TMR0IF)
+   520  00002E  0E01               	movlw	1
+   521  000030  AAF2               	btfss	4082,5,c	;volatile
+   522  000032  0E00               	movlw	0
+   523  000034  A4F2               	btfss	4082,2,c	;volatile
+   524  000036  0E00               	movlw	0
+   525  000038  A0E8               	btfss	wreg,0,c
+   526  00003A  D004               	goto	i1l71
+   527                           
+   528                           ;Timer.c: 25:     {;Timer.c: 26:         timer0_reset();
+   529  00003C  EC78  F008         	call	i1_timer0_reset	;wreg free
+   530                           
+   531                           ;Timer.c: 27:         timer_process();
+   532  000040  EC35  F008         	call	_timer_process	;wreg free
+   533  000044                     i1l71:
+   534  000044  C018  FFDA         	movff	??_timer0_isr+4,fsr2h
+   535  000048  C017  FFD9         	movff	??_timer0_isr+3,fsr2l
+   536  00004C  C016  FFE0         	movff	??_timer0_isr+2,bsr
+   537  000050  C015  FFE8         	movff	??_timer0_isr+1,wreg
+   538  000054  C014  FFD8         	movff	??_timer0_isr,status
+   539  000058  901C               	bcf	btemp,0,c	;clear compiler interrupt flag (level 1)
+   540  00005A  0010               	retfie	
+   541  00005C                     __end_of_timer0_isr:
+   542                           	opt callstack 0
+   543                           
+   544 ;; *************** function i1_timer0_reset *****************
+   545 ;; Defined at:
+   546 ;;		line 15 in file "Timer.c"
+   547 ;; Parameters:    Size  Location     Type
+   548 ;;		None
+   549 ;; Auto vars:     Size  Location     Type
+   550 ;;		None
+   551 ;; Return value:  Size  Location     Type
+   552 ;;                  1    wreg      void 
+   553 ;; Registers used:
+   554 ;;		wreg, status,2
+   555 ;; Tracked objects:
+   556 ;;		On entry : 0/0
+   557 ;;		On exit  : 0/0
+   558 ;;		Unchanged: 0/0
+   559 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   560 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   561 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   562 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   563 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   564 ;;Total ram usage:        0 bytes
+   565 ;; Hardware stack levels used:    1
+   566 ;; This function calls:
+   567 ;;		Nothing
+   568 ;; This function is called by:
+   569 ;;		_timer0_isr
+   570 ;; This function uses a non-reentrant model
+   571 ;;
+   572                           
+   573                           	psect	text6
+   574  0010F0                     __ptext6:
+   575                           	opt callstack 0
+   576  0010F0                     i1_timer0_reset:
+   577                           	opt callstack 27
+   578                           
+   579                           ;Timer.c: 17:     TMR0IF = 0;
+   580                           
+   581                           ;incstack = 0
+   582  0010F0  94F2               	bcf	4082,2,c	;volatile
+   583                           
+   584                           ;Timer.c: 18:     TMR0ON = 0;
+   585  0010F2  9ED5               	bcf	4053,7,c	;volatile
+   586                           
+   587                           ;Timer.c: 19:     TMR0 = -1250;
+   588  0010F4  0EFB               	movlw	251
+   589  0010F6  6ED7               	movwf	4055,c	;volatile
+   590  0010F8  0E1E               	movlw	30
+   591  0010FA  6ED6               	movwf	4054,c	;volatile
+   592                           
+   593                           ;Timer.c: 20:     TMR0ON = 1;
+   594  0010FC  8ED5               	bsf	4053,7,c	;volatile
+   595  0010FE  0012               	return		;funcret
+   596  001100                     __end_ofi1_timer0_reset:
+   597                           	opt callstack 0
+   598                           
+   599 ;; *************** function _timer_process *****************
+   600 ;; Defined at:
+   601 ;;		line 46 in file "Led_Matrix.c"
+   602 ;; Parameters:    Size  Location     Type
+   603 ;;		None
+   604 ;; Auto vars:     Size  Location     Type
+   605 ;;		None
+   606 ;; Return value:  Size  Location     Type
+   607 ;;                  1    wreg      void 
+   608 ;; Registers used:
+   609 ;;		wreg, fsr2l, fsr2h, status,2, status,0
+   610 ;; Tracked objects:
+   611 ;;		On entry : 0/0
+   612 ;;		On exit  : 0/0
+   613 ;;		Unchanged: 0/0
+   614 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   615 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   616 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   617 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   618 ;;      Totals:         2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   619 ;;Total ram usage:        2 bytes
+   620 ;; Hardware stack levels used:    1
+   621 ;; This function calls:
+   622 ;;		Nothing
+   623 ;; This function is called by:
+   624 ;;		_timer0_isr
+   625 ;; This function uses a non-reentrant model
+   626 ;;
+   627                           
+   628                           	psect	text7
+   629  00106A                     __ptext7:
+   630                           	opt callstack 0
+   631  00106A                     _timer_process:
+   632                           	opt callstack 27
+   633                           
+   634                           ;Led_Matrix.c: 48:     row = 0;
+   635                           
+   636                           ;incstack = 0
+   637  00106A  0E00               	movlw	0
+   638  00106C  6E8A               	movwf	3978,c	;volatile
+   639                           
+   640                           ;Led_Matrix.c: 49:     gcol=rambuf[1][rowidx];
+   641  00106E  0E09               	movlw	low (_rambuf+8)
+   642  001070  2411               	addwf	_rowidx,w,c
+   643  001072  6ED9               	movwf	fsr2l,c
+   644  001074  6ADA               	clrf	fsr2h,c
+   645  001076  0E00               	movlw	high (_rambuf+8)
+   646  001078  22DA               	addwfc	fsr2h,f,c
+   647  00107A  50DF               	movf	indf2,w,c
+   648  00107C  6E8B               	movwf	3979,c	;volatile
+   649                           
+   650                           ;Led_Matrix.c: 50:     rcol=rambuf[0][rowidx];
+   651  00107E  0E01               	movlw	low _rambuf
+   652  001080  2411               	addwf	_rowidx,w,c
+   653  001082  6ED9               	movwf	fsr2l,c
+   654  001084  6ADA               	clrf	fsr2h,c
+   655  001086  0E00               	movlw	high _rambuf
+   656  001088  22DA               	addwfc	fsr2h,f,c
+   657  00108A  50DF               	movf	indf2,w,c
+   658  00108C  6E8C               	movwf	3980,c	;volatile
+   659                           
+   660                           ;Led_Matrix.c: 51:     row=1<<rowidx++;
+   661  00108E  C011  F012         	movff	_rowidx,??_timer_process
+   662  001092  0E01               	movlw	1
+   663  001094  6E13               	movwf	(??_timer_process+1)& (0+255),c
+   664  001096  2A12               	incf	??_timer_process,f,c
+   665  001098  D002               	goto	i1u2_24
+   666  00109A                     i1u2_25:
+   667  00109A  90D8               	bcf	status,0,c
+   668  00109C  3613               	rlcf	??_timer_process+1,f,c
+   669  00109E                     i1u2_24:
+   670  00109E  2E12               	decfsz	??_timer_process,f,c
+   671  0010A0  D7FC               	goto	i1u2_25
+   672  0010A2  5013               	movf	??_timer_process+1,w,c
+   673  0010A4  6E8A               	movwf	3978,c	;volatile
+   674  0010A6  2A11               	incf	_rowidx,f,c
+   675                           
+   676                           ;Led_Matrix.c: 52:     rowidx%=8;
+   677  0010A8  0E07               	movlw	7
+   678  0010AA  1611               	andwf	_rowidx,f,c
+   679  0010AC  0012               	return		;funcret
+   680  0010AE                     __end_of_timer_process:
+   681                           	opt callstack 0
+   682                           
+   683                           	psect	rparam
+   684  0000                     
+   685                           	psect	temp
+   686  00001C                     btemp:
+   687                           	opt callstack 0
+   688  00001C                     	ds	1
+   689  0000                     int$flags	set	btemp
+   690  0000                     wtemp8	set	btemp+1
+   691  0000                     ttemp5	set	btemp+1
+   692  0000                     ttemp6	set	btemp+4
+   693  0000                     ttemp7	set	btemp+8
+   694                           tosu	equ	0xFFF
+   695                           tosh	equ	0xFFE
+   696                           tosl	equ	0xFFD
+   697                           stkptr	equ	0xFFC
+   698                           pclatu	equ	0xFFB
+   699                           pclath	equ	0xFFA
+   700                           pcl	equ	0xFF9
+   701                           tblptru	equ	0xFF8
+   702                           tblptrh	equ	0xFF7
+   703                           tblptrl	equ	0xFF6
+   704                           tablat	equ	0xFF5
+   705                           prodh	equ	0xFF4
+   706                           prodl	equ	0xFF3
+   707                           indf0	equ	0xFEF
+   708                           postinc0	equ	0xFEE
+   709                           postdec0	equ	0xFED
+   710                           preinc0	equ	0xFEC
+   711                           plusw0	equ	0xFEB
+   712                           fsr0h	equ	0xFEA
+   713                           fsr0l	equ	0xFE9
+   714                           wreg	equ	0xFE8
+   715                           indf1	equ	0xFE7
+   716                           postinc1	equ	0xFE6
+   717                           postdec1	equ	0xFE5
+   718                           preinc1	equ	0xFE4
+   719                           plusw1	equ	0xFE3
+   720                           fsr1h	equ	0xFE2
+   721                           fsr1l	equ	0xFE1
+   722                           bsr	equ	0xFE0
+   723                           indf2	equ	0xFDF
+   724                           postinc2	equ	0xFDE
+   725                           postdec2	equ	0xFDD
+   726                           preinc2	equ	0xFDC
+   727                           plusw2	equ	0xFDB
+   728                           fsr2h	equ	0xFDA
+   729                           fsr2l	equ	0xFD9
+   730                           status	equ	0xFD8
+
+
+Data Sizes:
+    Strings     0
+    Constant    16
+    Data        0
+    BSS         17
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           94     10      27
+    BANK0           160      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+    BANK8           256      0       0
+    BANK9           256      0       0
+    BANK10          256      0       0
+    BANK11          256      0       0
+    BANK12          256      0       0
+    BANK13          256      0       0
+    BANK14          256      0       0
+    BANK15           96      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    _main->_rom2ram
+
+Critical Paths under _timer0_isr in COMRAM
+
+    _timer0_isr->_timer_process
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _timer0_isr in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _timer0_isr in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _timer0_isr in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _timer0_isr in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _timer0_isr in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _timer0_isr in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _timer0_isr in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Critical Paths under _timer0_isr in BANK7
+
+    None.
+
+Critical Paths under _main in BANK8
+
+    None.
+
+Critical Paths under _timer0_isr in BANK8
+
+    None.
+
+Critical Paths under _main in BANK9
+
+    None.
+
+Critical Paths under _timer0_isr in BANK9
+
+    None.
+
+Critical Paths under _main in BANK10
+
+    None.
+
+Critical Paths under _timer0_isr in BANK10
+
+    None.
+
+Critical Paths under _main in BANK11
+
+    None.
+
+Critical Paths under _timer0_isr in BANK11
+
+    None.
+
+Critical Paths under _main in BANK12
+
+    None.
+
+Critical Paths under _timer0_isr in BANK12
+
+    None.
+
+Critical Paths under _main in BANK13
+
+    None.
+
+Critical Paths under _timer0_isr in BANK13
+
+    None.
+
+Critical Paths under _main in BANK14
+
+    None.
+
+Critical Paths under _timer0_isr in BANK14
+
+    None.
+
+Critical Paths under _main in BANK15
+
+    None.
+
+Critical Paths under _timer0_isr in BANK15
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0      90
+                               _init
+                            _rom2ram
+                        _timer0_init
+ ---------------------------------------------------------------------------------
+ (1) _timer0_init                                          0     0      0       0
+                       _timer0_reset
+ ---------------------------------------------------------------------------------
+ (2) _timer0_reset                                         0     0      0       0
+ ---------------------------------------------------------------------------------
+ (1) _rom2ram                                              3     3      0      90
+                                              7 COMRAM     3     3      0
+ ---------------------------------------------------------------------------------
+ (1) _init                                                 0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (3) _timer0_isr                                           5     5      0       0
+                                              2 COMRAM     5     5      0
+                      _timer_process
+                     i1_timer0_reset
+ ---------------------------------------------------------------------------------
+ (4) i1_timer0_reset                                       0     0      0       0
+ ---------------------------------------------------------------------------------
+ (4) _timer_process                                        2     2      0       0
+                                              0 COMRAM     2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 4
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _init
+   _rom2ram
+   _timer0_init
+     _timer0_reset
+
+ _timer0_isr (ROOT)
+   _timer_process
+   i1_timer0_reset
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             F5F      0       0      37        0.0%
+EEDATA             400      0       0       0        0.0%
+BITBANK14          100      0       0      33        0.0%
+BANK14             100      0       0      34        0.0%
+BITBANK13          100      0       0      30        0.0%
+BANK13             100      0       0      31        0.0%
+BITBANK12          100      0       0      28        0.0%
+BANK12             100      0       0      29        0.0%
+BITBANK11          100      0       0      26        0.0%
+BANK11             100      0       0      27        0.0%
+BITBANK10          100      0       0      24        0.0%
+BANK10             100      0       0      25        0.0%
+BITBANK9           100      0       0      22        0.0%
+BANK9              100      0       0      23        0.0%
+BITBANK8           100      0       0      20        0.0%
+BANK8              100      0       0      21        0.0%
+BITBANK7           100      0       0      18        0.0%
+BANK7              100      0       0      19        0.0%
+BITBANK6           100      0       0      16        0.0%
+BANK6              100      0       0      17        0.0%
+BITBANK5           100      0       0      14        0.0%
+BANK5              100      0       0      15        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0      0       0       5        0.0%
+BITBANK15           60      0       0      35        0.0%
+BANK15              60      0       0      36        0.0%
+BITCOMRAM           5E      0       0       0        0.0%
+COMRAM              5E      A      1B       1       28.7%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      1B      32        0.0%
+DATA                 0      0      1B       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
+Symbol Table                                                                                   Tue Oct 29 14:37:34 2019
+
+                     l36 110C                       bsr 000FE0              __CFG_OSC$HS 000000  
+ __end_ofi1_timer0_reset 1100                      l761 1016                      _row 000F8A  
+                    wreg 000FE8             __CFG_LVP$OFF 000000             __CFG_WDT$OFF 000000  
+                   i1l71 0044                     _TMR0 000FD6                     _gcol 000F8B  
+                   _main 1100                     _init 110E                     _rcol 000F8C  
+                   fsr2h 000FDA                     indf2 000FDF                     fsr2l 000FD9  
+                   btemp 001C                     start 005C             ___param_bank 000000  
+        ??_timer_process 0012                    ?_main 0012                    ?_init 0012  
+        ?i1_timer0_reset 0012                    _T0CON 000FD5          __end_of_rom2ram 106A  
+                  tablat 000FF5                    ttemp5 001D                    ttemp6 0020  
+                  ttemp7 0024                    status 000FD8                    wtemp8 001D  
+        __initialization 10AE             __end_of_main 110E             __end_of_init 111C  
+                 ??_main 001C                   ??_init 0019            __activetblptr 000001  
+                 _TMR0IE 007F95                   _TMR0IF 007F92                   _TMR0ON 007EAF  
+                 i1u2_24 109E                   i1u2_25 109A             ?_timer0_init 0012  
+                 _maurom 1001                   clear_0 10B4                   _rambuf 0001  
+                 _row_io 000F93                   _rowidx 0011                ??_rom2ram 0019  
+           __mediumconst 0000                   tblptrh 000FF7                   tblptrl 000FF6  
+                 tblptru 000FF8               __accesstop 0060  __end_of__initialization 10BA  
+          ___rparam_used 000001           __pcstackCOMRAM 0012         ??i1_timer0_reset 0012  
+                __Hparam 0000                  __Lparam 0000             __psmallconst 1000  
+                __pcinit 10AE                  __ramtop 1000     __size_of_timer0_init 0014  
+          ?_timer0_reset 0012                  __ptext0 1100                  __ptext1 10CC  
+                __ptext2 10E0                  __ptext3 1012                  __ptext4 110E  
+                __ptext6 10F0                  __ptext7 106A                  _gcol_io 000F94  
+  __end_of_timer_process 10AE                  _rom2ram 1012                  _rcol_io 000F95  
+   end_of_initialization 10BA               _timer0_isr 0018                  postinc0 000FEE  
+         ??_timer0_reset 0019           __end_of_maurom 1011      start_initialization 10AE  
+            ?_timer0_isr 0012              __pbssCOMRAM 0001     __end_of_timer0_reset 10F0  
+            __pintcodelo 0018              __smallconst 1000                 ?_rom2ram 0012  
+    __size_of_timer0_isr 0044                 _RCONbits 000FD0            ??_timer0_init 0019  
+__size_ofi1_timer0_reset 0010              _INTCON2bits 000FF1   __size_of_timer_process 0044  
+               __Hrparam 0000                 __Lrparam 0000             __Lsmallconst 1000  
+    __end_of_timer0_init 10E0         __size_of_rom2ram 0058    __size_of_timer0_reset 0010  
+          __size_of_main 000E            __size_of_init 000E             ??_timer0_isr 0014  
+               int$flags 001C             _timer0_reset 10E0            _timer_process 106A  
+             _INTCONbits 000FF2                 intlevel1 0000       __end_of_timer0_isr 005C  
+               rom2ram@i 001B              _timer0_init 10CC           ?_timer_process 0012  
+         i1_timer0_reset 10F0  
