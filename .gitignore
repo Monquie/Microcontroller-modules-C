@@ -1,5 +1,0 @@
-Books/
-Practice/*
-!Practice/*.pdf
-!Practice/**/*.c
-!Practice/**/*.h
